@@ -9,16 +9,8 @@ jobs:
       - run: docker push cmmattd/testapp:$CIRCLE_BUILD_NUM
       - run: docker build -t cmmattd/testapp .
       - run: docker push cmmattd/testapp
-dependencies:
-  override:
-  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
-  - chmod +x kubectl
-  - sudo apt-get -y install gnupg
-compile:
-  override:
-  - echo $GPG_KEY | gpg -d --passphrase-fd $GPG_PASS  --batch --yes kube.gpg > kubeconfig
-deployment:
-  prod:
-    branch: master
-    commands:
-      - env KUBECONFIG=kubeconfig PATH=$PATH:. kubectl replace --force -f kubernets/deployment.yml
+      - run: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+      - run: chmod +x kubectl
+      - run: sudo apt-get -y install gnupg
+      - run: echo $GPG_PASS | gpg -d --passphrase-fd 0  --batch --yes kube.gpg > kubeconfig
+      - run: env KUBECONFIG=kubeconfig PATH=$PATH:. kubectl replace --force -f kubernetes/deployment.yml
