@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-application
+  labels:
+    app: nodetest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodetest
+  template:
+    metadata:
+      labels:
+        app: nodetest
+    spec:
+      containers:
+      - name: nodetest
+        image: cmattd/testapp
+        ports:
+        - containerPort: 80
