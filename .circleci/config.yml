@@ -13,4 +13,4 @@ jobs:
       - run: chmod +x kubectl
       - run: sudo apt-get -y install gnupg
       - run: echo $GPG_PASS | gpg -d --passphrase-fd 0  --batch --yes kube.gpg > kubeconfig
-      - run: env KUBECONFIG=kubeconfig PATH=$PATH:. kubectl replace --force -f kubernetes/deployment.yml
+      - run: env KUBECONFIG=kubeconfig PATH=$PATH:. kubectl set image deployment/test-application nodetest=cmmattd/testapp:latest
