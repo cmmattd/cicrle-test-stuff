@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: nodetest
-        image: cmattd/testapp
+        image: cmmattd/testapp
         ports:
         - containerPort: 80
